@@ -24,7 +24,6 @@ public class ThreadCache {
         String queryParam;
         String contentType;
         String requestData;
-
     }
 
     public static void setRequestPath(String requestPath) {
