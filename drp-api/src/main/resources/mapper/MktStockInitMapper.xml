@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ ~
+ ~ @author wh
+ ~ @date 2018-12-01 13:36:09
+ ~ Created by CodeGen .
+-->
+
+<mapper namespace="SQLSERVER_MktStockInit">
+    <resultMap id="MktStockInitMapper" type="MktStockInit">
+        <id property="storeCode" column="storeCode"/>
+        <result property="skuCode" column="skuCode"/>
+        <result property="TickTime" column="TickTime"/>
+        <result property="Comtag" column="Comtag"/>
+    </resultMap>
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(*) FROM  t_o2o_mkt_stock WHERE comtag = 0
+    </select>
+
+    <!--<select id="paging" parameterType="map" resultMap="BaseResultMap">
+           SELECT
+           <include refid="cols_all"/>
+           FROM
+           <include refid="tb"/>
+           <where>
+               <include refid="criteria"/>
+           </where>
+           ORDER BY #{sort} DESC
+           LIMIT #{offset}, #{limit}
+       </select>-->
+
+   <!-- <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="mktStockInit" index="index" open="" close="" separator=";">
+            UPDATE t_o2o_mkt_stock
+            <set>
+                Comtag= #{mktStockInit.Comtag}
+            </set>
+            <where>
+             skuCode=#{mktStockInit.skuCode}
+            </where>
+        </foreach>
+    </update>-->
+
+    <update id="batchUpdate">
+        <foreach separator=";" collection="list" item="mktStockInit" index="index">
+            update t_o2o_mkt_stock
+            <set>
+                Comtag= #{mktStockInit.Comtag}
+            </set>
+            WHERE skuCode= #{mktStockInit.skuCode}
+        </foreach>
+    </update>
+
+
+
+</mapper>

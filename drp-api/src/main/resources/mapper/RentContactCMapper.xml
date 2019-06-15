@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SQLSERVER_RentContactC">
+    <resultMap id="BaseResultMap" type="RentContactC">
+        <result column="no_contact" jdbcType="VARCHAR" property="noContact"/>
+        <result column="drpid" jdbcType="CHAR" property="drpid"/>
+        <result column="mktid" jdbcType="CHAR" property="mktid"/>
+        <result column="custid" jdbcType="CHAR" property="custid"/>
+        <result column="shopid" jdbcType="VARCHAR" property="shopid"/>
+        <result column="name_full" jdbcType="VARCHAR" property="nameFull"/>
+        <result column="name_short" jdbcType="VARCHAR" property="nameShort"/>
+        <result column="classid" jdbcType="VARCHAR" property="classid"/>
+        <result column="shopid_vs" jdbcType="VARCHAR" property="shopidVs"/>
+        <result column="standards" jdbcType="VARCHAR" property="standards"/>
+        <result column="unit_sale" jdbcType="VARCHAR" property="unitSale"/>
+        <result column="flag_wp" jdbcType="CHAR" property="flagWp"/>
+        <result column="txm" jdbcType="VARCHAR" property="txm"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="disc" jdbcType="DECIMAL" property="disc"/>
+        <result column="num" jdbcType="DECIMAL" property="num"/>
+        <result column="disc_num" jdbcType="DECIMAL" property="discNum"/>
+        <result column="disc_max" jdbcType="DECIMAL" property="discMax"/>
+        <result column="canrtn" jdbcType="CHAR" property="canrtn"/>
+        <result column="stop_sale" jdbcType="CHAR" property="stopSale"/>
+        <result column="point_back" jdbcType="DECIMAL" property="pointBack"/>
+        <result column="tax_buy" jdbcType="DECIMAL" property="taxBuy"/>
+        <result column="tax_sale" jdbcType="DECIMAL" property="taxSale"/>
+        <result column="deptid" jdbcType="CHAR" property="deptid"/>
+        <result column="def_by" jdbcType="VARCHAR" property="defBy"/>
+        <result column="time_def" jdbcType="TIMESTAMP" property="timeDef"/>
+        <result column="chg_by" jdbcType="VARCHAR" property="chgBy"/>
+        <result column="createtime" jdbcType="DATE" property="lastUpdateTime"/>
+        <result column="point_backpro" jdbcType="DECIMAL" property="pointBackpro"/>
+        <result column="deptid_by" jdbcType="CHAR" property="deptidBy"/>
+        <result column="trademark" jdbcType="VARCHAR" property="trademark"/>
+        <result column="marksmall" jdbcType="VARCHAR" property="marksmall"/>
+        <result column="make_by" jdbcType="VARCHAR" property="makeBy"/>
+        <result column="flag_tax" jdbcType="CHAR" property="flagTax"/>
+        <result column="point_exceed" jdbcType="DECIMAL" property="pointExceed"/>
+        <result column="toplimit_sale" jdbcType="DECIMAL" property="toplimitSale"/>
+        <result column="flag_exceed" jdbcType="CHAR" property="flagExceed"/>
+        <result column="flag_sale" jdbcType="CHAR" property="flagSale"/>
+        <result column="flag_stop" jdbcType="CHAR" property="flagStop"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="yearid" jdbcType="INTEGER" property="yearid"/>
+        <result column="type_store" jdbcType="VARCHAR" property="typeStore"/>
+        <result column="category" jdbcType="CHAR" property="category"/>
+        <result column="flag_o2o" jdbcType="CHAR" property="flagO2o"/>
+        <result column="selling_point" jdbcType="VARCHAR" property="sellingPoint"/>
+    </resultMap>
+    <sql id="tb">
+        t_jku_rent_contact_c
+    </sql>
+
+    <sql id="cols_all">
+         no_contact, drpid, mktid,
+      custid, shopid, name_full,
+      name_short, classid, shopid_vs,
+      standards, unit_sale, flag_wp,
+      txm, price, disc, num,
+      disc_num, disc_max, canrtn,
+      stop_sale, point_back, tax_buy,
+      tax_sale, deptid, def_by,
+      time_def, chg_by, createtime,
+      point_backpro, deptid_by, trademark,
+      marksmall, make_by, flag_tax,
+      point_exceed, toplimit_sale, flag_exceed,
+      flag_sale, flag_stop, reason,
+      yearid, type_store, category,
+      flag_o2o, selling_point
+    </sql>
+
+    <sql id="criteria">
+        <if test="lastUpdateTime != null"><![CDATA[  AND createtime > #{lastUpdateTime} ]]></if>
+    </sql>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="BaseResultMap">
+        SELECT TOP ${pageSize}
+        <include refid="cols_all"/>
+        FROM
+        (SELECT ROW_NUMBER() OVER (ORDER BY #{sort} DESC) AS RowNo,* FROM
+        <include refid="tb"/>
+        ) t
+        <where>
+            t.RowNo > #{offset}
+            <include refid="criteria"/>
+        </where>
+    </select>
+</mapper>

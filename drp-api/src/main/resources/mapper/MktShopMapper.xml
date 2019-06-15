@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SQLSERVER_MktShop">
+    <resultMap id="BaseResultMap" type="MktShop">
+        <result column="storecode" jdbcType="CHAR" property="storecode" />
+        <result column="skucode" jdbcType="VARCHAR" property="skucode" />
+        <result column="offlinesalestatus" jdbcType="INTEGER" property="offlinesalestatus" />
+        <result column="onlinesalestatus" jdbcType="INTEGER" property="onlinesalestatus" />
+        <result column="price" jdbcType="INTEGER" property="price" />
+        <result column="createtime" jdbcType="DATE" property="lastUpdateTime" />
+        <result column="comtag" jdbcType="INTEGER" property="comtag" />
+        <result column="combatchno" jdbcType="VARCHAR" property="combatchno" />
+        <result column="stop_wsale" jdbcType="CHAR" property="stopWsale" />
+        <result column="stop_wsalertn" jdbcType="CHAR" property="stopWsalertn" />
+        <result column="stop_deli" jdbcType="CHAR" property="stopDeli" />
+        <result column="stop_delirtn" jdbcType="CHAR" property="stopDelirtn" />
+        <result column="stop_order" jdbcType="CHAR" property="stopOrder" />
+        <result column="stop_order_rtn" jdbcType="CHAR" property="stopOrderRtn" />
+        <result column="stop_movein" jdbcType="CHAR" property="stopMovein" />
+        <result column="stop_moveout" jdbcType="CHAR" property="stopMoveout" />
+        <result column="flag_dist" jdbcType="CHAR" property="flagDist" />
+        <result column="flag_distrtn" jdbcType="CHAR" property="flagDistrtn" />
+        <result column="order_stk" jdbcType="CHAR" property="orderStk" />
+        <result column="stkid_add" jdbcType="VARCHAR" property="stkidAdd" />
+        <result column="order_deli" jdbcType="CHAR" property="orderDeli" />
+        <result column="flag_deli" jdbcType="CHAR" property="flagDeli" />
+        <result column="order_sup" jdbcType="CHAR" property="orderSup" />
+        <result column="flag_sup" jdbcType="CHAR" property="flagSup" />
+        <result column="order_delisup" jdbcType="CHAR" property="orderDelisup" />
+        <result column="flag_delisup" jdbcType="CHAR" property="flagDelisup" />
+        <result column="drpid" jdbcType="CHAR" property="drpid" />
+        <result column="countid" jdbcType="VARCHAR" property="countid" />
+        <result column="deptid" jdbcType="VARCHAR" property="deptid" />
+        <result column="lock_check" jdbcType="CHAR" property="lockCheck" />
+        <result column="def_by" jdbcType="VARCHAR" property="defBy" />
+        <result column="time_def" jdbcType="TIMESTAMP" property="timeDef" />
+        <result column="chg_by" jdbcType="VARCHAR" property="chgBy" />
+        <result column="time_chg" jdbcType="TIMESTAMP" property="timeChg" />
+        <result column="supid_last" jdbcType="VARCHAR" property="supidLast" />
+        <result column="time_last" jdbcType="TIMESTAMP" property="timeLast" />
+        <result column="price_last" jdbcType="DECIMAL" property="priceLast" />
+        <result column="num_last" jdbcType="DECIMAL" property="numLast" />
+        <result column="price_sale_max" jdbcType="DECIMAL" property="priceSaleMax" />
+        <result column="price_sale_min" jdbcType="DECIMAL" property="priceSaleMin" />
+        <result column="flag_autofill" jdbcType="CHAR" property="flagAutofill" />
+        <result column="num_location" jdbcType="DECIMAL" property="numLocation" />
+        <result column="day_fill" jdbcType="DECIMAL" property="dayFill" />
+        <result column="duty_by" jdbcType="VARCHAR" property="dutyBy" />
+        <result column="parm_fill" jdbcType="DECIMAL" property="parmFill" />
+        <result column="type_abc" jdbcType="CHAR" property="typeAbc" />
+        <result column="way_location" jdbcType="VARCHAR" property="wayLocation" />
+        <result column="num_holiday" jdbcType="DECIMAL" property="numHoliday" />
+        <result column="flag_cross" jdbcType="CHAR" property="flagCross" />
+        <result column="price_lower" jdbcType="DECIMAL" property="priceLower" />
+        <result column="time_lower" jdbcType="TIMESTAMP" property="timeLower" />
+        <result column="price_avg" jdbcType="DECIMAL" property="priceAvg" />
+        <result column="time_avg" jdbcType="TIMESTAMP" property="timeAvg" />
+        <result column="way_bk" jdbcType="VARCHAR" property="wayBk" />
+        <result column="status_shop" jdbcType="VARCHAR" property="statusShop" />
+        <result column="time_statchg" jdbcType="TIMESTAMP" property="timeStatchg" />
+        <result column="type_kcstk" jdbcType="VARCHAR" property="typeKcstk" />
+        <result column="reason" jdbcType="VARCHAR" property="reason" />
+        <result column="supid1" jdbcType="VARCHAR" property="supid1" />
+        <result column="supid2" jdbcType="VARCHAR" property="supid2" />
+        <result column="pog_mark" jdbcType="INTEGER" property="pogMark" />
+        <result column="styleid" jdbcType="VARCHAR" property="styleid" />
+        <result column="max_deep" jdbcType="INTEGER" property="maxDeep" />
+        <result column="pog_id" jdbcType="VARCHAR" property="pogId" />
+        <result column="pog_version" jdbcType="VARCHAR" property="pogVersion" />
+        <result column="pog_date" jdbcType="TIMESTAMP" property="pogDate" />
+        <result column="shopstatchg_time" jdbcType="TIMESTAMP" property="shopstatchgTime" />
+        <result column="fresh_kf" jdbcType="VARCHAR" property="freshKf" />
+        <result column="time_kf" jdbcType="TIMESTAMP" property="timeKf" />
+    </resultMap>
+
+    <sql id="tb">
+        t_o2o_mkt_shop
+    </sql>
+
+    <sql id="cols_all">
+        storecode, skucode, offlinesalestatus,
+      onlinesalestatus, price, createtime,
+      comtag, combatchno, stop_wsale,
+      stop_wsalertn, stop_deli, stop_delirtn,
+      stop_order, stop_order_rtn, stop_movein,
+      stop_moveout, flag_dist, flag_distrtn,
+      order_stk, stkid_add, order_deli,
+      flag_deli, order_sup, flag_sup,
+      order_delisup, flag_delisup, drpid,
+      countid, deptid, lock_check,
+      def_by, time_def, chg_by,
+      time_chg, supid_last, time_last,
+      price_last, num_last, price_sale_max,
+      price_sale_min, flag_autofill, num_location,
+      day_fill, duty_by, parm_fill,
+      type_abc, way_location, num_holiday,
+      flag_cross, price_lower, time_lower,
+      price_avg, time_avg, way_bk,
+      status_shop, time_statchg, type_kcstk,
+      reason, supid1, supid2,
+      pog_mark, styleid, max_deep,
+      pog_id, pog_version, pog_date,
+      shopstatchg_time, fresh_kf, time_kf
+    </sql>
+
+    <sql id="criteria">
+        <if test="lastUpdateTime != null"><![CDATA[  AND createtime > #{lastUpdateTime} ]]></if>
+    </sql>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="BaseResultMap">
+        SELECT TOP ${pageSize}
+        <include refid="cols_all"/>
+        FROM
+        (SELECT ROW_NUMBER() OVER (ORDER BY #{sort} DESC) AS RowNo,* FROM
+        <include refid="tb"/>
+        ) t
+        <where>
+            t.RowNo > #{offset}
+            <include refid="criteria"/>
+        </where>
+    </select>
+</mapper>

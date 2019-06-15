@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SQLSERVER_">
+    <resultMap id="BaseResultMap" type="">
+
+    </resultMap>
+    <sql id="tb">
+
+    </sql>
+
+    <sql id="cols_all">
+
+    </sql>
+
+    <sql id="criteria">
+        <if test="lastUpdateTime != null"><![CDATA[  AND createtime > #{lastUpdateTime} ]]></if>
+    </sql>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="BaseResultMap">
+        SELECT TOP ${pageSize}
+        <include refid="cols_all"/>
+        FROM
+        (SELECT ROW_NUMBER() OVER (ORDER BY #{sort} DESC) AS RowNo,* FROM
+        <include refid="tb"/>
+        ) t
+        <where>
+            t.RowNo > #{offset}
+            <include refid="criteria"/>
+        </where>
+    </select>
+</mapper>

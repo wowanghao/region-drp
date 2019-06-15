@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LogData">
+    <resultMap id="BaseResultMap" type="com.jiajiayue.all.regiondrp.common.log.bean.LogData">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="module" jdbcType="VARCHAR" property="module"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="method_key" jdbcType="VARCHAR" property="methodKey"/>
+        <result column="request_json" jdbcType="VARCHAR" property="requestJson"/>
+        <result column="response_json" jdbcType="VARCHAR" property="responseJson"/>
+        <result column="created_at" jdbcType="DATE" property="createdAt"/>
+    </resultMap>
+    <sql id="tb">
+        basic_info_log
+    </sql>
+
+    <sql id="cols_all">
+            id,module,description,method_key,request_json,response_json,created_at
+    </sql>
+
+    <sql id="criteria">
+
+    </sql>
+
+    <sql id="vals">
+        #{id}, #{module}, #{description}, #{methodKey}, #{requestJson}, #{responseJson}, #{createdAt}
+    </sql>
+
+    <insert id="create" parameterType="com.jiajiayue.all.regiondrp.common.log.bean.LogData" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_all"/>)
+        VALUES
+        (<include refid="vals"/>)
+    </insert>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+        ORDER BY #{sort} DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+</mapper>

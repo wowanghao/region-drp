@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jiajiayue.all.regiondrp</groupId>
+    <artifactId>region-drp</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>drp-api</module>
+    </modules>
+
+    <properties>
+        <artifact.version>1.0-SNAPSHOT</artifact.version>
+        <guava-version>18.0</guava-version>
+        <spring-boot.version>1.5.12.RELEASE</spring-boot.version>
+        <lombok.version>1.16.22</lombok.version>
+        <dynamic-datasource.version>1.0-SNAPSHOT</dynamic-datasource.version>
+        <swagger.version>2.8.0</swagger.version>
+        <commons-io.version>2.5</commons-io.version>
+        <terminus-common.version>2.2.RELEASE</terminus-common.version>
+        <terminus-mybatis-starter.version>1.5.3.RELEASE</terminus-mybatis-starter.version>
+        <mq.version>1.0-SNAPSHOT</mq.version>
+        <elastic-job-starter.version>1.1.1-SNAPSHOT</elastic-job-starter.version>
+
+        <!-- interface platform product package -->
+        <interface-platform.version>1.0-SNAPSHOT</interface-platform.version>
+        <terminus.redis.starter.version>1.6.3.RELEASE</terminus.redis.starter.version>
+        <hutool.version>4.1.4</hutool.version>
+        <srping.mybatis.starter.version>1.5.3.RELEASE</srping.mybatis.starter.version>
+        <mysql.connect.version>5.1.46</mysql.connect.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jiajiayue.o2o</groupId>
+            <artifactId>jiajiayue-common-logging</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.terminus</groupId>
+            <artifactId>terminus-common</artifactId>
+            <version>${terminus-common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>7.0.0.jre8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jjy.interface.platform</groupId>
+            <artifactId>platform-common</artifactId>
+            <version>${interface-platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jjy.interface.platform</groupId>
+            <artifactId>dynamic-datasource</artifactId>
+            <version>${interface-platform.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 增加hutool工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--job start-->
+            <dependency>
+                <groupId>io.terminus.elastic.job</groupId>
+                <artifactId>spring-boot-elastic-job-starter</artifactId>
+                <version>${elastic-job-starter.version}</version>
+            </dependency>
+            <!--job end-->
+
+            <!--spring start-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring end-->
+
+            <!--spring web container start-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-tomcat</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jetty</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!--spring web container end-->
+
+            <!--swagger start-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!--swagger end-->
+
+            <!--mq start-->
+            <dependency>
+                <groupId>io.terminus.common</groupId>
+                <artifactId>terminus-spring-boot-starter-rocketmq</artifactId>
+                <version>${mq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>guava</artifactId>
+                        <groupId>com.google.guava</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--mq end-->
+
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>spring-boot-starter-mybatis</artifactId>
+                <version>${terminus-mybatis-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>terminus-spring-boot-starter-redis</artifactId>
+                <version>${terminus.redis.starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>spring-boot-starter-mybatis</artifactId>
+                <version>${srping.mybatis.starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connect.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <fork>true</fork>
+                        <skip>false</skip>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <attach>false</attach>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <skipSource>true</skipSource>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
