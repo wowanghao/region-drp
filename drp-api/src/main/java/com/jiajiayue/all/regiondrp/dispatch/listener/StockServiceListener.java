@@ -1,9 +1,7 @@
 package com.jiajiayue.all.regiondrp.dispatch.listener;
 
 
-import cn.hutool.json.JSONArray;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jiajiayue.all.regiondrp.biz.model.MktStockInit;
 import com.jiajiayue.all.regiondrp.biz.service.MktStockWriteService;
 import com.jiajiayue.all.regiondrp.common.util.HttpParametersUtils;
@@ -17,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

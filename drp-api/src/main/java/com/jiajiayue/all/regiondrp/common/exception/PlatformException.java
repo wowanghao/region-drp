@@ -14,6 +14,11 @@ public class PlatformException extends RuntimeException {
         this.PlatformErrorEnum = PlatformErrorEnum;
     }
 
+    @Override
+    public String getMessage() {
+        return PlatformErrorEnum.getName();
+    }
+
     public PlatformException(String message) {
         super(message);
     }

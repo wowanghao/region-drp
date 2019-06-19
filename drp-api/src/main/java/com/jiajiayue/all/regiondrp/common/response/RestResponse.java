@@ -31,6 +31,11 @@ public class RestResponse implements Serializable {
         this.error = e.getMessage();
     }
 
+    public RestResponse(String error) {
+        this.success = false;
+        this.error = error;
+    }
+
     public void setError(String error) {
         this.success = false;
         this.error = error;

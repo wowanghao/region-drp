@@ -35,6 +35,7 @@ public class RegionDrpStockInitJob extends AbstractSimpleScheduleJob implements 
     public RegionDrpStockInitJob() {
     }
 
+    @Override
     protected void execute(JobProcessParam jobProcessParam) throws Exception {
         this.mktStockManageParallel(jobProcessParam);
     }

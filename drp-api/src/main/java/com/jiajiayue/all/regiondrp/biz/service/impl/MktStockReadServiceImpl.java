@@ -10,19 +10,18 @@ import com.jiajiayue.all.regiondrp.biz.dto.wrapper.ListRequestWrapper;
 import com.jiajiayue.all.regiondrp.biz.service.MktStockReadService;
 import com.jiajiayue.all.regiondrp.common.exception.PlatformError;
 import com.jiajiayue.all.regiondrp.common.request.ListRequest;
-import com.jiajiayue.all.regiondrp.common.response.ListResponse;
 import com.jiajiayue.all.regiondrp.common.response.RestResponse;
 import io.jjy.platform.common.datasource.DynamicDataSourceContext;
-import io.terminus.common.exception.ServiceException;
 import io.terminus.common.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -63,7 +62,7 @@ public class MktStockReadServiceImpl implements MktStockReadService {
         try {
             resultList = mktStockInitDao.listPaging(criteria);
         } catch (Exception ex) {
-            log.error("dataSource=" + dataSource + " " + PlatformError.STOCK_00020);
+            log.error("dataSource=" + dataSource + " " + PlatformError.BASIC_INFO_00010);
             log.error(new Exception(ex).getMessage());
         } finally {
             dynamicDataSourceContext.clear();

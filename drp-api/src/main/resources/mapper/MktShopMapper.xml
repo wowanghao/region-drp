@@ -105,6 +105,7 @@
 
     <sql id="criteria">
         <if test="lastUpdateTime != null"><![CDATA[  AND createtime > #{lastUpdateTime} ]]></if>
+        <if test="stkId != null"><![CDATA[  AND storecode = #{stkId} ]]></if>
     </sql>
 
     <select id="count" parameterType="map" resultType="long">
@@ -122,10 +123,12 @@
         FROM
         (SELECT ROW_NUMBER() OVER (ORDER BY #{sort} DESC) AS RowNo,* FROM
         <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
         ) t
         <where>
             t.RowNo > #{offset}
-            <include refid="criteria"/>
         </where>
     </select>
 </mapper>

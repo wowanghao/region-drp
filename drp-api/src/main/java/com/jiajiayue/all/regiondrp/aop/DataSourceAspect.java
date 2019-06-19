@@ -1,9 +1,14 @@
 package com.jiajiayue.all.regiondrp.aop;
 
 
+import com.jiajiayue.all.regiondrp.common.exception.PlatformError;
+import com.jiajiayue.all.regiondrp.common.exception.PlatformErrorEnum;
+import com.jiajiayue.all.regiondrp.common.exception.PlatformException;
+import io.jjy.platform.common.datasource.DynamicDataSource;
 import io.jjy.platform.common.datasource.DynamicDataSourceContext;
 import io.terminus.common.model.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -26,6 +31,8 @@ public class DataSourceAspect {
     @Autowired
     private DynamicDataSourceContext dynamicDataSourceContext;
 
+    @Autowired
+    DynamicDataSource dynamicDataSource;
 
     @Around("execution( * com.jiajiayue.all.regiondrp.biz.service.impl.*.*(..))")
     public Object process(ProceedingJoinPoint point) throws Throwable {
@@ -33,6 +40,11 @@ public class DataSourceAspect {
         HttpServletRequest request = attributes.getRequest();
         String stkId = request.getParameter("stkId");
         dynamicDataSourceContext.setDataSource(stkId);
+        try {
+            dynamicDataSource.getConnection();
+        } catch (Exception ex) {
+            throw new PlatformException(PlatformErrorEnum.BASIC_INFO_00010);
+        }
         Object ret;
         try {
             ret = point.proceed();

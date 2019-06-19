@@ -1,8 +1,11 @@
 package com.jiajiayue.all.regiondrp.aop;
 
 
+import com.jiajiayue.all.regiondrp.biz.dto.request.BasicInfoRequest;
 import com.jiajiayue.all.regiondrp.biz.dto.request.MockRequest;
 import com.jiajiayue.all.regiondrp.common.request.AbstractPageRequest;
+import com.jiajiayue.all.regiondrp.common.request.AbstractRequest;
+import com.jiajiayue.all.regiondrp.common.response.RestResponse;
 import io.jjy.platform.common.constant.TopicEnum;
 import io.jjy.platform.common.event.OpenPlatformExecutionEvent;
 import io.terminus.common.rocketmq.core.TerminusMQProducer;
@@ -11,6 +14,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,6 +23,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
@@ -40,12 +45,12 @@ public class SecurityAspect {
         HttpServletRequest request = attributes.getRequest();
         try {
             Object[] args = point.getArgs();
-            if (args != null && args.length > 0 && args[0].getClass().getSuperclass() == AbstractPageRequest.class) {
-                AbstractPageRequest abstractPageRequest = (AbstractPageRequest) args[0];
-                abstractPageRequest.checkParam();
+            if (args != null && args.length > 0 && args[0].getClass().getSuperclass().getSuperclass() == AbstractRequest.class) {
+                AbstractRequest abstractRequest = (AbstractRequest) args[0];
+                abstractRequest.checkParam();
             }
             ret = point.proceed();
-            this.sendMq(request);
+            this.sendMq(request, ret);
         } catch (Throwable e) {
             this.sendMq(request, e);
             throw e;
@@ -53,23 +58,30 @@ public class SecurityAspect {
         return ret;
     }
 
-    private void sendMq(HttpServletRequest request) {
-        this.sendMq(request, null);
+    private void sendMq(HttpServletRequest request, Object obj) {
+        this.sendMq(request, obj, null);
     }
 
-    private void sendMq(HttpServletRequest request, Throwable e) {
+    private void sendMq(HttpServletRequest request, Object obj, Throwable e) {
         try {
             OpenPlatformExecutionEvent openPlatformExecutionEvent = new OpenPlatformExecutionEvent();
             openPlatformExecutionEvent.setExecutionAt(new Date());
-            openPlatformExecutionEvent.setSource("");
-            openPlatformExecutionEvent.setMessage(e == null ? "" : e.getMessage());
+            openPlatformExecutionEvent.setSource("drp-api-store");
+            if (e == null) {
+                if (obj instanceof ResponseEntity) {
+                    ResponseEntity res = (ResponseEntity) obj;
+                    openPlatformExecutionEvent.setMessage(res.getBody().toString());
+                }
+            } else {
+                openPlatformExecutionEvent.setMessage(e.getMessage());
+            }
             String executeUrl = request.getRequestURL().toString();
             String queryString = request.getQueryString();
             if (queryString != null) {
                 executeUrl += "?" + queryString;
             }
             openPlatformExecutionEvent.setRequestUrl(executeUrl);
-            openPlatformExecutionEvent.setExecutionState(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            openPlatformExecutionEvent.setExecutionState(e == null ? HttpServletResponse.SC_OK : HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             openPlatformExecutionEvent.setRequestBody(getRequestData(request));
             terminusMQProducer.send(TopicEnum.SERVER_EXECUTE_LOG_TOPIC, openPlatformExecutionEvent);
         } catch (Exception ex) {

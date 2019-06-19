@@ -6,6 +6,7 @@ import io.terminus.common.rocketmq.core.TerminusMQProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,16 +35,17 @@ class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = PlatformException.class)
-    public Response PlatformExceptionHandler(PlatformException e) {
-        PlatformErrorEnum platformErrorEnum = e.getPlatformErrorEnum();
-        Response response = Response.fail(platformErrorEnum.getCode(), platformErrorEnum.getName());
+    public RestResponse PlatformExceptionHandler(PlatformException e) {
+        RestResponse response = new RestResponse(e);
         return response;
     }
 
     @ResponseBody
     @ExceptionHandler(value = BindException.class)
-    public Response exceptionHandler(BindException e) {
-        Response response = Response.fail(e.getBindingResult().getFieldError().getDefaultMessage());
+    public RestResponse exceptionHandler(BindException e) {
+        log.error(e.getBindingResult().getFieldError().getDefaultMessage());
+        FieldError fd = (FieldError) e.getBindingResult().getAllErrors().get(0);
+        RestResponse response = new RestResponse(fd.getField() + ": 格式错误");
         return response;
     }
 

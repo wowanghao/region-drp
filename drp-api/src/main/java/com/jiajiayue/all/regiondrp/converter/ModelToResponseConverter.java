@@ -19,24 +19,14 @@ public interface ModelToResponseConverter {
      * @param model MktStockInit
      * @return MktStockInit
      */
-    MockResponse modelToResponse(MktStockInit model);
 
   /*  @Mappings({
             @Mapping(target = "lastmodify", expression = "java(com.jiajiayue.all.regiondrp.common.util.ConvertUtil.bytesToLong(model.getLastmodify()))")
     })
     NorpriceWaitResponse modelToResponse(NorpriceWait model);*/
 
-    NorpriceResponse modelToResponse(Norprice model);
-
-    NorpriceDelResponse modelToResponse(NorpriceDel model);
 
     MktShopResponse modelToResponse(MktShop model);
-
-    MktStockResponse modelToResponse(MktStock model);
-
-    RentContactCResponse modelToResponse(RentContactC model);
-
-    PoscashResponse modelToResponse(Poscash model);
 
 /*    @Mappings({
             @Mapping(source = "request.storeCode", target = "storeCode"),
