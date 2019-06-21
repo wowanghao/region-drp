@@ -2,14 +2,9 @@ package com.jiajiayue.all.regiondrp.common.util.http;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import lombok.Builder;
+import cn.hutool.http.HttpStatus;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Map;
 
 /**
  * @author WangHao
@@ -19,15 +14,14 @@ import java.util.Map;
 @Slf4j
 public abstract class AbstractHttpSend {
 
-    public Map<String, Object> sendHttpRequest(HttpParametersModel httpParametersModel) throws Exception {
+    public String sendHttpRequest(HttpRequestParam httpRequestParam) throws Exception {
         HttpResponse httpResponse = null;
-        String requestUrl = httpParametersModel.getRequestUrl();
+        String requestUrl = httpRequestParam.getRequestUrl();
         try {
-            httpResponse = createHttpRequest(httpParametersModel).execute();
-            if (null != httpResponse && httpResponse.getStatus() == 200) {
-                Map mapResponseBody = JSON.parseObject(httpResponse.body(), Map.class);
+            httpResponse = createHttpRequest(httpRequestParam).execute();
+            if (null != httpResponse && httpResponse.getStatus() == HttpStatus.HTTP_OK) {
                 log.info("requestUrl={},httpResponse={}", requestUrl, httpResponse.toString());
-                return mapResponseBody;
+                return httpResponse.body();
             }
             throw new Exception("httpResponse.getStatus() != 200");
         } catch (Exception ex) {
@@ -35,6 +29,6 @@ public abstract class AbstractHttpSend {
         }
     }
 
-    public abstract HttpRequest createHttpRequest(HttpParametersModel httpParametersModel) throws Exception;
+    public abstract HttpRequest createHttpRequest(HttpRequestParam httpRequestParam) throws Exception;
 
 }

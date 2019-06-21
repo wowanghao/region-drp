@@ -6,12 +6,15 @@ import com.jiajiayue.all.regiondrp.biz.service.BasicInfoReadService;
 import com.jiajiayue.all.regiondrp.common.annotation.LogMe;
 import com.jiajiayue.all.regiondrp.common.response.RestResponse;
 import com.jiajiayue.all.regiondrp.common.util.http.HttpGetUtil;
-import com.jiajiayue.all.regiondrp.common.util.http.HttpParametersModel;
+import com.jiajiayue.all.regiondrp.common.util.http.HttpRequestParam;
+import com.jiajiayue.all.regiondrp.common.util.http.HttpResponseModel;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.jiajiayue.all.regiondrp.common.util.http.Invoker.andResponse;
 
 import java.util.Map;
 
@@ -39,20 +42,26 @@ public class BasicInfoController {
     @ApiOperation(value = "测试")
     @GetMapping(value = "test")
     @LogMe(module = "test", description = "test stock")
-    public ResponseEntity<String> test(@RequestParam String stkId, Integer loop, Integer pageSize) throws Exception {
+    public ResponseEntity<String> test(@RequestParam String stkId, Integer loop, Integer pageSize, String urlStr) throws Exception {
         HttpGetUtil httpGetUtil = HttpGetUtil.builder().build();
-        String urlStr = "http://localhost:8086/api/region/basicInfo/listMktStock";
+        if (urlStr == null) {
+            urlStr = "http://localhost:8086/api/region/basicInfo/listMktStock";
+        }
         Map resultMap = null;
-        HttpParametersModel httpParametersModel = HttpParametersModel.builder().requestUrl(urlStr).build();
-        httpParametersModel.getParaMap().put("pageSize", pageSize);
-        httpParametersModel.getParaMap().put("stkId", stkId);
+        HttpRequestParam httpRequestParam = HttpRequestParam.builder().requestUrl(urlStr).build();
+        httpRequestParam.getParaMap().put("pageSize", pageSize);
+        httpRequestParam.getParaMap().put("stkId", stkId);
+        HttpResponseModel httpResponseModel = null;
         for (int i = 0; i < loop; i++) {
-            httpParametersModel.getParaMap().put("pageNo", i+1);
-            resultMap = httpGetUtil.sendHttpRequest(httpParametersModel);
-            log.info(JSON.toJSONString(resultMap));
+            httpRequestParam.getParaMap().put("pageNo", i + 1);
+            String responseBodyStr = httpGetUtil.sendHttpRequest(httpRequestParam);
+            httpResponseModel = andResponse(responseBodyStr, param -> {
+                return param.get("result");
+            });
+            log.info(JSON.toJSONString(httpResponseModel));
             log.info(">>>>>>>>>>>>i=" + i);
         }
-        return ResponseEntity.ok(JSON.toJSONString(resultMap));
+        return ResponseEntity.ok(JSON.toJSONString(httpResponseModel));
     }
 
 }

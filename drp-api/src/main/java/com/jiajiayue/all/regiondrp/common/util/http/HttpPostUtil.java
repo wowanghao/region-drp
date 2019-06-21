@@ -19,13 +19,13 @@ import java.util.Map;
 public class HttpPostUtil extends AbstractHttpSend {
 
     @Override
-    public HttpRequest createHttpRequest(HttpParametersModel httpParametersModel) throws Exception {
-        String requestUrl = httpParametersModel.getRequestUrl();
-        String bodyString = JSONObject.toJSONString(httpParametersModel.getBodyObj());
+    public HttpRequest createHttpRequest(HttpRequestParam httpRequestParam) throws Exception {
+        String requestUrl = httpRequestParam.getRequestUrl();
+        String bodyString = JSONObject.toJSONString(httpRequestParam.getBodyObj());
         HttpRequest httpRequest = HttpUtil.createPost(requestUrl)
                 .body(bodyString)
-                .timeout(httpParametersModel.getTimeout());
-        Map<String, String> headerMap = httpParametersModel.getHeaderMap();
+                .timeout(httpRequestParam.getTimeout());
+        Map<String, String> headerMap = httpRequestParam.getHeaderMap();
         for (String key : headerMap.keySet()) {
             httpRequest = httpRequest.header(key, headerMap.get(key));
         }

@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @Data
 @Builder
-public class HttpParametersModel {
+public class HttpRequestParam {
     private String requestUrl;
     @Builder.Default
     private Map paraMap = new HashMap();
