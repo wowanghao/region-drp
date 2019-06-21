@@ -19,6 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Connection;
 
 /**
  * author
@@ -40,8 +41,7 @@ public class DataSourceAspect {
         HttpServletRequest request = attributes.getRequest();
         String stkId = request.getParameter("stkId");
         dynamicDataSourceContext.setDataSource(stkId);
-        try {
-            dynamicDataSource.getConnection();
+        try (Connection connection = dynamicDataSource.getConnection()) {
         } catch (Exception ex) {
             throw new PlatformException(PlatformErrorEnum.BASIC_INFO_00010);
         }
