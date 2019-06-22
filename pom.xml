@@ -10,6 +10,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>drp-api</module>
+        <module>report-center-core</module>
+        <module>report-center-demo</module>
+        <module>report-center-api</module>
+        <module>report-center-manager</module>
+        <module>report-center-admin</module>
     </modules>
 
     <properties>
@@ -24,13 +29,21 @@
         <terminus-mybatis-starter.version>1.5.3.RELEASE</terminus-mybatis-starter.version>
         <mq.version>1.0-SNAPSHOT</mq.version>
         <elastic-job-starter.version>1.1.1-SNAPSHOT</elastic-job-starter.version>
-
         <!-- interface platform product package -->
         <interface-platform.version>1.0-SNAPSHOT</interface-platform.version>
         <terminus.redis.starter.version>1.6.3.RELEASE</terminus.redis.starter.version>
         <hutool.version>4.1.4</hutool.version>
         <srping.mybatis.starter.version>1.5.3.RELEASE</srping.mybatis.starter.version>
         <mysql.connect.version>5.1.46</mysql.connect.version>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>1.5.14.RELEASE</spring.boot.version>
+        <spring.version>4.3.18.RELEASE</spring.version>
+        <lombok.version>1.18.2</lombok.version>
+        <zookeeper.version>3.4.13</zookeeper.version>
+        <aliyun.sdk.version>2.6.0</aliyun.sdk.version>
+        <terminus.springboot.mybatis>1.5.1.RELEASE</terminus.springboot.mybatis>
+        <terminus.dubbo.version>1.0.2.5.RELEASE</terminus.dubbo.version>
     </properties>
 
     <dependencies>
@@ -78,6 +91,117 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.sdk.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus</groupId>
+                <artifactId>api-common</artifactId>
+                <version>1.0.8.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-web-common</artifactId>
+                <version>5.0.3.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>1.2.0.Final</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot.rpc</groupId>
+                <artifactId>dubbo-light-provider</artifactId>
+                <version>${terminus.dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot.rpc</groupId>
+                <artifactId>dubbo-light-common</artifactId>
+                <version>${terminus.dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot.rpc</groupId>
+                <artifactId>dubbo-light-consumer</artifactId>
+                <version>${terminus.dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>1.1.2-beta4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.14</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.55</version>
+            </dependency>
             <!-- 增加hutool工具包 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -180,7 +304,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 
     <build>

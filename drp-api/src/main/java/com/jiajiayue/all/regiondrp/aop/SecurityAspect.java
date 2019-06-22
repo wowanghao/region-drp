@@ -45,9 +45,17 @@ public class SecurityAspect {
         HttpServletRequest request = attributes.getRequest();
         try {
             Object[] args = point.getArgs();
-            if (args != null && args.length > 0 && args[0].getClass().getSuperclass().getSuperclass() == AbstractRequest.class) {
-                AbstractRequest abstractRequest = (AbstractRequest) args[0];
-                abstractRequest.checkParam();
+            if (args != null && args.length > 0) {
+                Class clazz = args[0].getClass();
+                while (clazz != null) {
+                    //noinspection unchecked
+                    if (clazz == AbstractRequest.class) {
+                        AbstractRequest abstractRequest = (AbstractRequest) args[0];
+                        abstractRequest.checkParam();
+                    } else {
+                        clazz = clazz.getSuperclass();
+                    }
+                }
             }
             ret = point.proceed();
             this.sendMq(request, ret);

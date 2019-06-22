@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ ~
+ ~ @author [ your email ]
+ ~ @date 2019-02-27 10:56:58
+ ~ Created by CodeGen .
+-->
+
+<mapper namespace="DataTransferTaskModel">
+    <resultMap id="DataTransferTaskModelMap" type="DataTransferTaskModel">
+        <id property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="displayName" column="display_name"/>
+        <result property="desc" column="desc"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="criteriaJson" column="criteria_json"/>
+        <result property="filePath" column="file_path"/>
+        <result property="errorRecordsFilePath" column="error_records_path"/>
+        <result property="fileExt" column="file_ext"/>
+        <result property="successCount" column="success_count"/>
+        <result property="errorCount" column="error_count"/>
+        <result property="status" column="status"/>
+        <result property="message" column="message"/>
+        <result property="extraJson" column="extra_json"/>
+        <result property="startedAt" column="started_at"/>
+        <result property="finishedAt" column="finished_at"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="table_name">
+        parana_data_transfer_task
+    </sql>
+
+    <sql id="columns_all">
+        id,
+        <include refid="columns_exclude_id"/>
+    </sql>
+
+    <sql id="columns_exclude_id">
+        `type`, `name`, `display_name`, `desc`, `user_id`, `user_name`, `user_nickname`, `criteria_json`, `file_path`, `error_records_path`, `file_ext`, `success_count`,
+        `error_count`, `status`, `message`, `extra_json`, `started_at`, `finished_at`, created_at, updated_at
+    </sql>
+
+    <sql id="values_exclude_id">
+        #{type}, #{name}, #{displayName}, #{desc}, #{userId}, #{userName}, #{userNickname}, #{criteriaJson}, #{filePath}, #{errorRecordsFilePath}, #{fileExt},
+        #{successCount}, #{errorCount}, #{status}, #{message}, #{extraJson}, #{startedAt}, #{finishedAt}, now(), now()
+    </sql>
+
+    <sql id="criteria">
+        <where>
+            <if test="type != null">AND `type` = #{type}</if>
+            <if test="name != null">AND `name` = #{name}</if>
+            <if test="displayName != null">AND `display_name` LIKE CONCAT('%', #{displayName} ,'%')</if>
+            <if test="desc != null">AND `desc` = #{desc}</if>
+            <if test="userId != null">AND `user_id` = #{userId}</if>
+            <if test="userName != null">AND `user_name` LIKE CONCAT('%', #{userName} ,'%')</if>
+            <if test="userNickname != null">AND `user_nickname` LIKE CONCAT('%', #{userNickname} ,'%')</if>
+            <if test="criteriaJson != null">AND `criteria_json` = #{criteriaJson}</if>
+            <if test="filePath != null">AND `file_path` = #{filePath}</if>
+            <if test="errorRecordsFilePath != null">AND `error_records_path` = #{errorRecordsFilePath}</if>
+            <if test="fileExt != null">AND `file_ext` = #{fileExt}</if>
+            <if test="successCount != null">AND `success_count` = #{successCount}</if>
+            <if test="errorCount != null">AND `error_count` = #{errorCount}</if>
+            <if test="status != null">AND `status` = #{status}</if>
+            <if test="frontStatus != null">
+                <choose>
+                    <when test="frontStatus==-1">AND `status` <![CDATA[ < 0]]></when>
+                    <otherwise>AND `status` = #{frontStatus}</otherwise>
+                </choose>
+            </if>
+            <if test="message != null">AND `message` = #{message}</if>
+            <if test="extraJson != null">AND `extra_json` = #{extraJson}</if>
+            <if test="startedAt != null">AND `started_at` = #{startedAt}</if>
+            <if test="finishedAt != null">AND `finished_at` = #{finishedAt}</if>
+            <if test="createdAt != null">AND <![CDATA[created_at >= #{createdAt}]]> </if>
+            <if test="createdAtStart != null">AND <![CDATA[created_at >= #{createdAtStart}]]> </if>
+            <if test="createdAtEnd != null">AND <![CDATA[created_at <= #{createdAtEnd}]]> </if>
+            <if test="updatedAt != null">AND <![CDATA[updated_at < #{updatedAt}]]> </if>
+        </where>
+    </sql>
+
+    <insert id="create" parameterType="DataTransferTaskModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        <include refid="table_name"/>
+        (<include refid="columns_exclude_id"/>)
+        VALUES
+        (<include refid="values_exclude_id"/>)
+    </insert>
+
+    <insert id="creates" parameterType="DataTransferTaskModel" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="table_name"/>
+        (<include refid="columns_exclude_id"/>)
+        VALUES
+        <foreach collection="list" item="i" index="index" separator=",">
+            (#{i.type}, #{i.name}, #{i.displayName}, #{i.desc}, #{i.userId}, #{i.userName}, ${i.userNickname}, #{i.criteriaJson}, #{i.filePath}, #{i.errorRecordsFilePath},
+            #{i.fileExt}, #{i.successCount}, #{i.errorCount}, #{i.status}, #{i.message}, #{i.extraJson}, #{i.startedAt},
+            #{i.finishedAt}, now(), now())
+        </foreach>
+    </insert>
+
+    <select id="findById" parameterType="long" resultMap="DataTransferTaskModelMap">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="table_name"/>
+        WHERE id = #{id} LIMIT 1
+    </select>
+
+    <select id="findByIds" parameterType="list" resultMap="DataTransferTaskModelMap">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="table_name"/>
+        WHERE id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="update" parameterType="DataTransferTaskModel">
+        UPDATE
+        <include refid="table_name"/>
+        <set>
+            <if test="type != null">`type` = #{type},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="displayName != null">`display_name` = #{displayName},</if>
+            <if test="desc != null">`desc` = #{desc},</if>
+            <if test="userId != null">`user_id` = #{userId},</if>
+            <if test="userName != null">`user_name` = #{userName},</if>
+            <if test="userNickname!= null">`user_nickname` = #{userNickname},</if>
+            <if test="criteriaJson != null">`criteria_json` = #{criteriaJson},</if>
+            <if test="filePath != null">`file_path` = #{filePath},</if>
+            <if test="errorRecordsFilePath != null">`error_records_path` = #{errorRecordsFilePath},</if>
+            <if test="fileExt != null">`file_ext` = #{fileExt},</if>
+            <if test="successCount != null">`success_count` = #{successCount},</if>
+            <if test="errorCount != null">`error_count` = #{errorCount},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="message != null">`message` = #{message},</if>
+            <if test="extraJson != null">`extra_json` = #{extraJson},</if>
+            <if test="startedAt != null">`started_at` = #{startedAt},</if>
+            <if test="finishedAt != null">`finished_at` = #{finishedAt},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+        <include refid="table_name"/>
+        WHERE id = #{id}
+    </delete>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="table_name"/>
+        <include refid="criteria"/>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="DataTransferTaskModelMap">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="table_name"/>
+        <include refid="criteria"/>
+        ORDER BY `id` DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="list" parameterType="map" resultMap="DataTransferTaskModelMap">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="table_name"/>
+        <include refid="criteria"/>
+        ORDER BY `id` DESC
+    </select>
+
+</mapper>
