@@ -1,3 +1,4 @@
+/*
 package com.jiajiayue.all.regiondrp.schedule.job;
 
 import com.dangdang.ddframe.job.api.ShardingContext;
@@ -15,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
+*/
 /**
  * @author WangHao
  * @date 2019/5/26 2:09
- */
+ *//*
+
 public abstract class AbstractSimpleScheduleJob extends AbstractJob implements SimpleJob {
     private static final Logger log = LoggerFactory.getLogger(AbstractSimpleScheduleJob.class);
     protected static JsonMapper objectMapper;
@@ -71,3 +74,4 @@ public abstract class AbstractSimpleScheduleJob extends AbstractJob implements S
         objectMapper = JsonMapper.JSON_NON_EMPTY_MAPPER;
     }
 }
+*/

@@ -24,7 +24,6 @@ dev.properties
 dependency-reduced-pom.xml
 *.rdb
 logs/
-application.yml
 lib/
 jetty-request.log
 region-drp-api.log

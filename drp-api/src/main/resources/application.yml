@@ -1,0 +1,74 @@
+logging:
+  path: ${user.home}/logs/jjy
+  level.root: INFO
+  level.io.jjy: ${JJY_LOG_LEVEL:INFO}
+  level.io.terminus: ${TERMINUS_LOG_LEVEL:INFO}
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:192.168.219.129}:${MYSQL_PORT:3306}/${MYSQL_DATABASES:db}?useUnicode=true&characterEncoding=UTF8&useSSL=false&allowMultiQueries=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    tomcat:
+      # 空闲连接检查
+      time-between-eviction-runs-millis: 6000
+      validation-query: SELECT 1
+      # 检查空闲连接是否收回
+      test-while-idle: true
+      # 从连接池取出连接进行检查
+      test-on-borrow: true
+      # 归还检查，关闭就行
+      test-on-return: false
+      initial-size: 5
+      min-idle: 10
+      max-active: 50
+      max-wait: 60000
+      # 配置一个连接在池中最小生存的时间
+      min-evictable-idle-time-millis: 300000
+
+redis:
+  host: ${REDIS_HOST:192.168.219.129}
+  port: ${REDIS_PORT:6379}
+  max-total: ${REDIS_MAX_TOTAL:20}
+  max-idle: ${REDIS_MAX_IDLE:10}
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: >
+    com.jiajiayue.all.regiondrp.biz.model
+
+terminus:
+  rocketmq:
+    nameServerAddress: ${ROCKETMQ_NAMESRV_HOST:192.168.219.129}:${ROCKETMQ_NAMESRV_PORT:9876}
+    producerGroup: ${MQ_GROUP:drp_schedule_stock}
+
+inventory.consumer.threadCount: 4
+
+elastic:
+  job:
+    zk:
+      serverLists: ${ZOOKEEPER_HOST:192.168.219.129}:${ZOOKEEPER_PORT:2181}
+      namespace: drp-job
+
+    #wanghao
+    #region-drp-stock-init:
+      #cron: 0/15 * * * * ?
+      #overwrite: true #配置覆盖，去中心化
+      #shardingTotalCount: 1
+      #shardingItemParameters: 0=1234
+      #failover: true #失效转移
+      #misfire: true #错过机制
+      #description: init
+
+dynamicDataSource:
+  provider: ${DYNAMIC_DATASOURCE_PROVIDER:io.jjy.platform.common.datasource.provider.ConfigurableDataSourceProvider}
+  groupKey: ${DYNAMIC_DATASOURCE_GROUPKEY:drp}
+
+server:
+  port: 8080
+
+constant:
+  stock:
+    stockInitUrl: http://localhost:8080/test/init

@@ -1,3 +1,4 @@
+/*
 package com.jiajiayue.all.regiondrp.schedule.job;
 
 import com.alibaba.fastjson.JSON;
@@ -16,10 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * @author wh
  * @date 2019/05/20 10:42
- */
+ *//*
+
 @Slf4j
 @Component
 //@ElasticJobConfig(name = "region-drp-stock-init")
@@ -51,9 +54,11 @@ public class RegionDrpStockInitJob extends AbstractSimpleScheduleJob implements 
         });
     }
 
-    /**
+    */
+/**
      * 获取数据
-     */
+     *//*
+
     protected List fetchPage(Integer currentPage, String dataSource) {
         Map<String, Object> criteria = Maps.newHashMap();
         criteria.put("pageSize", pageSize);
@@ -62,9 +67,11 @@ public class RegionDrpStockInitJob extends AbstractSimpleScheduleJob implements 
         return result;
     }
 
-    /**
+    */
+/**
      * 发送mq
-     */
+     *//*
+
     protected void sendMQ(List listSelectData, String dataSource) {
         Map mapMq = new HashMap();
         mapMq.put("data", listSelectData);
@@ -80,3 +87,4 @@ public class RegionDrpStockInitJob extends AbstractSimpleScheduleJob implements 
 
 
 }
+*/

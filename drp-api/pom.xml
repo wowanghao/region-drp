@@ -52,10 +52,10 @@
         </dependency>
 
         <!--job start-->
-        <dependency>
+        <!--<dependency>
             <groupId>io.terminus.elastic.job</groupId>
             <artifactId>spring-boot-elastic-job-starter</artifactId>
-        </dependency>
+        </dependency>-->
         <!--job end-->
 
         <dependency>

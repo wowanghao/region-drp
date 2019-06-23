@@ -1,3 +1,4 @@
+/*
 package com.jiajiayue.all.regiondrp.schedule.util;
 
 import com.dangdang.ddframe.job.api.ShardingContext;
@@ -17,3 +18,4 @@ public class BaseJobEventUtils {
         baseJobEvent.setTaskId(shardingContext.getTaskId());
     }
 }
+*/

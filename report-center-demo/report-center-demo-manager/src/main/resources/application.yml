@@ -1,0 +1,57 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:192.168.219.129}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:db}?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
+
+data.transfer:
+  storage:
+    active: local
+    local:
+      baseDir: ~/data/
+    #oss:
+      #baseDir: data/
+      #endpoint: oss-cn-qingdao.aliyuncs.com
+      #bucket: jiajiayue-o2o
+      #key: LTAIqEaeRZpx87Tl
+      #secret: OtR9kkjC9fVETNMbGnGiK39Wc5b2mo
+
+admin:
+  messages:
+    classpath: >
+      classpath:messages/messages,
+      classpath:message/messages
+
+security:
+  basic:
+    enabled: false
+
+dubbo:
+  application:
+    name: report-center-demo-manager-admin
+  protocol:
+    accesslog: true
+    name: dubbo
+    port: 26880
+  registry:
+    id: report-center-demo-manager-admin
+    address: zookeeper://${ZOOKEEPER_HOST:192.168.219.129}:${ZOOKEEPER_PORT:2181}
+  provider:
+    scan-packages: >
+      io.terminus.common.data.transfer.api.facade
+  consumer:
+    version: 1.0.0
+    check: false
+
+mybatis:
+  mapperLocations:  classpath*:mapper/*Mapper.xml
+  typeAliasesPackage: >
+    io.terminus.common.data.transfer.manager.server.persistent.model
+
+
+logging:
+  level: debug

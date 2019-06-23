@@ -1,0 +1,26 @@
+data.transfer:
+  storage:
+    active: local
+    local:
+      baseDir: ~/data/
+    #oss:
+      #baseDir: data/
+      #endpoint: oss-cn-qingdao.aliyuncs.com
+      #bucket: YOUR_BUCKET
+      #key: YOUR_KEY
+      #secret: YOUR_SECRET
+
+
+dubbo:
+  application:
+    name: report-center-demo-core-a
+  protocol:
+    accesslog: true
+    name: dubbo
+    port: 26881
+  registry:
+    id: report-center-demo-core-a
+    address: zookeeper://${ZOOKEEPER_HOST:192.168.219.129}:${ZOOKEEPER_PORT:2181}
+  consumer:
+    version: 1.0.0
+    check: false

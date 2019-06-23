@@ -209,11 +209,11 @@
                 <version>${hutool.version}</version>
             </dependency>
             <!--job start-->
-            <dependency>
+            <!--<dependency>
                 <groupId>io.terminus.elastic.job</groupId>
                 <artifactId>spring-boot-elastic-job-starter</artifactId>
                 <version>${elastic-job-starter.version}</version>
-            </dependency>
+            </dependency>-->
             <!--job end-->
 
             <!--spring start-->

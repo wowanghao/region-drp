@@ -1,3 +1,4 @@
+/*
 package com.jiajiayue.all.regiondrp.schedule.model;
 
 import com.dangdang.ddframe.job.api.ShardingContext;
@@ -18,4 +19,4 @@ public class JobProcessParam {
         jobProcessParam.setLastStartAt(lastStartAt);
         return jobProcessParam;
     }
-}
+}*/
