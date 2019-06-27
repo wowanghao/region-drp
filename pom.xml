@@ -46,51 +46,55 @@
         <terminus.dubbo.version>1.0.2.5.RELEASE</terminus.dubbo.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.jiajiayue.o2o</groupId>
-            <artifactId>jiajiayue-common-logging</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.terminus</groupId>
-            <artifactId>terminus-common</artifactId>
-            <version>${terminus-common.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>7.0.0.jre8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.jjy.interface.platform</groupId>
-            <artifactId>platform-common</artifactId>
-            <version>${interface-platform.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jjy.interface.platform</groupId>
-            <artifactId>dynamic-datasource</artifactId>
-            <version>${interface-platform.version}</version>
-        </dependency>
-    </dependencies>
-
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.jiajiayue.o2o</groupId>
+                <artifactId>jiajiayue-common-logging</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus</groupId>
+                <artifactId>terminus-common</artifactId>
+                <version>${terminus-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>mssql-jdbc</artifactId>
+                <version>7.0.0.jre8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jjy.interface.platform</groupId>
+                <artifactId>platform-common</artifactId>
+                <version>${interface-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jjy.interface.platform</groupId>
+                <artifactId>dynamic-datasource</artifactId>
+                <version>${interface-platform.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus</groupId>
+                <artifactId>terminus-common</artifactId>
+                <version>${terminus-common.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>

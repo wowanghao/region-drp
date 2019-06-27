@@ -52,6 +52,7 @@ public class SecurityAspect {
                     if (clazz == AbstractRequest.class) {
                         AbstractRequest abstractRequest = (AbstractRequest) args[0];
                         abstractRequest.checkParam();
+                        break;
                     } else {
                         clazz = clazz.getSuperclass();
                     }

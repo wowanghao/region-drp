@@ -41,6 +41,7 @@ public class DataSourceAspect {
         HttpServletRequest request = attributes.getRequest();
         String stkId = request.getParameter("stkId");
         dynamicDataSourceContext.setDataSource(stkId);
+        //判断当前数据源是否有效
         try (Connection connection = dynamicDataSource.getConnection()) {
         } catch (Exception ex) {
             throw new PlatformException(PlatformErrorEnum.BASIC_INFO_00010);
