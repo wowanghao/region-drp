@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:parana}?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: ${MYSQL_USERNAME:admin}
+    password: ${MYSQL_PASSWORD:}
+
+data.transfer:
+  storage:
+    active: local
+    local:
+      baseDir: ~/data/
+    oss:
+      baseDir: data/
+      endpoint: oss-cn-qingdao.aliyuncs.com
+      bucket: YOUR_BUCKET
+      key: YOUR_KEY
+      secret: YOUR_SECRET
+
+
+dubbo:
+  application:
+    name: report-center-demo-core-b
+  protocol:
+    accesslog: true
+    name: dubbo
+    port: 26882
+  registry:
+    id: report-center-demo-core-b
+    address: zookeeper://${ZOOKEEPER_HOST:127.0.0.1}:${ZOOKEEPER_PORT:2181}
+  consumer:
+    version: 1.0.0
+    check: false
