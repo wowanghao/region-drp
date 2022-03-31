@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <springboot.version>1.5.14.RELEASE</springboot.version>
+        <springboot.version>2.5.12</springboot.version>
     </properties>
 
     <build>

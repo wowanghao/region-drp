@@ -20,7 +20,7 @@
     <properties>
         <artifact.version>1.0-SNAPSHOT</artifact.version>
         <guava-version>18.0</guava-version>
-        <spring-boot.version>1.5.12.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <lombok.version>1.16.22</lombok.version>
         <dynamic-datasource.version>1.0-SNAPSHOT</dynamic-datasource.version>
         <swagger.version>2.8.0</swagger.version>
